@@ -14,7 +14,7 @@ const displaySearchResult = (phones) => {
     for (const phone of phones) {
         console.log(phone)
         const div = document.createElement('div')
-        div.classList.add('col-lg-3')
+        div.classList.add('col-lg-4')
         div.classList.add('mt-3')
         div.innerHTML = `
         <div class="card h-100">
@@ -22,7 +22,7 @@ const displaySearchResult = (phones) => {
         <div class="card-body">
         <h3 class="card-title">${phone.brand}</h3>
         <h5 class="card-title">${phone.phone_name}</h5>
-        <button onclick="phoneSpecifications('${phone.slug})" class="btn btn-primary">See Details</button>
+        <button onclick="phoneSpecifications('${phone.slug}')" class="btn btn-primary">See Details</button>
         </div>
         </div>
         `
@@ -32,8 +32,23 @@ const displaySearchResult = (phones) => {
 
 const phoneSpecifications = phoneId => {
     console.log(phoneId);
-    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
     fetch(url)
-        .then(res => res.json())
-        .then(data => displayMealDetail(data.phones[0]));
+    .then(res => res.json())
+    .then(data => displayPhoneDetails(data.data))
+}
+const displayPhoneDetails = phone => {
+    console.log(phone);
+    const phoneDetails = document.getElementById('phone-details');
+    const div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `
+    <img src="${phone.image}"  class="card-img-top " alt="... ">
+        <div class="card-body ">
+        <h3 class="card-title">${phone.brand}</h3>
+        <h5 class="card-title">${phone.phone_name}</h5>
+            <p class="card-text ">${phone.mainFeatures[0]}</p>
+        </div>
+`;
+    phoneDetails.appendChild(div);
 }
