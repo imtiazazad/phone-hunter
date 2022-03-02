@@ -18,7 +18,7 @@ const searchMobile = () => {
         error.innerText = ''
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
             .then(res => res.json())
-            .then(data => displaySearchResult(data.data))
+            .then(data => displaySearchResult(data.data.slice(0, 20)))
             .catch(error => displayError(error));
     }
 }
